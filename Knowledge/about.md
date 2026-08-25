@@ -6,7 +6,8 @@ My name is Shivaani Balaji. I am a software engineer specializing in backend dev
 
 I have experience building enterprise applications using .NET, ASP.NET Core, C#, Entity Framework Core, PostgreSQL, REST APIs, Angular, and React.
 
-My primary area of interest is full stack engineering, API development, database design, distributed systems, and AI-powered applications.
+My primary area of interest is full stack
++ engineering, API development, database design, distributed systems, and AI-powered applications.
 
 ## Professional Focus
 

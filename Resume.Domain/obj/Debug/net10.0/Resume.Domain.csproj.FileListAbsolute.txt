@@ -1,0 +1,13 @@
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\bin\Debug\net10.0\Resume.Domain.deps.json
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\bin\Debug\net10.0\Resume.Domain.dll
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\bin\Debug\net10.0\Resume.Domain.pdb
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\obj\Debug\net10.0\Resume.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\obj\Debug\net10.0\Resume.Domain.AssemblyInfoInputs.cache
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\obj\Debug\net10.0\Resume.Domain.AssemblyInfo.cs
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\obj\Debug\net10.0\Resume.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\obj\Debug\net10.0\Resume.Domain.sourcelink.json
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\obj\Debug\net10.0\Resume.Domain.dll
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\obj\Debug\net10.0\refint\Resume.Domain.dll
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\obj\Debug\net10.0\Resume.Domain.pdb
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\obj\Debug\net10.0\ref\Resume.Domain.dll
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Domain\obj\Debug\net10.0\Resume.Domain.csproj.AssemblyReference.cache

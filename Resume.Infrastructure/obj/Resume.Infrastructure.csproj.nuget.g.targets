@@ -4,5 +4,6 @@
     <Import Project="$(NuGetPackageRoot)microsoft.extensions.logging.abstractions\10.0.4\buildTransitive\net8.0\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.logging.abstractions\10.0.4\buildTransitive\net8.0\Microsoft.Extensions.Logging.Abstractions.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.extensions.options\10.0.4\buildTransitive\net8.0\Microsoft.Extensions.Options.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.options\10.0.4\buildTransitive\net8.0\Microsoft.Extensions.Options.targets')" />
     <Import Project="$(NuGetPackageRoot)pgvector.entityframeworkcore\0.3.0\build\net8.0\Pgvector.EntityFrameworkCore.targets" Condition="Exists('$(NuGetPackageRoot)pgvector.entityframeworkcore\0.3.0\build\net8.0\Pgvector.EntityFrameworkCore.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.extensions.configuration.binder\10.0.0\buildTransitive\netstandard2.0\Microsoft.Extensions.Configuration.Binder.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.configuration.binder\10.0.0\buildTransitive\netstandard2.0\Microsoft.Extensions.Configuration.Binder.targets')" />
   </ImportGroup>
 </Project>

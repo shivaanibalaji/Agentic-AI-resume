@@ -1,0 +1,16 @@
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\bin\Debug\net10.0\Resume.Application.deps.json
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\bin\Debug\net10.0\Resume.Application.dll
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\bin\Debug\net10.0\Resume.Application.pdb
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\bin\Debug\net10.0\Resume.Domain.dll
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\bin\Debug\net10.0\Resume.Domain.pdb
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\obj\Debug\net10.0\Resume.Application.csproj.AssemblyReference.cache
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\obj\Debug\net10.0\Resume.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\obj\Debug\net10.0\Resume.Application.AssemblyInfoInputs.cache
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\obj\Debug\net10.0\Resume.Application.AssemblyInfo.cs
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\obj\Debug\net10.0\Resume.Application.csproj.CoreCompileInputs.cache
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\obj\Debug\net10.0\Resume.Application.sourcelink.json
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\obj\Debug\net10.0\Resume.A.10C33A57.Up2Date
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\obj\Debug\net10.0\Resume.Application.dll
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\obj\Debug\net10.0\refint\Resume.Application.dll
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\obj\Debug\net10.0\Resume.Application.pdb
+C:\Users\Shivaani\OneDrive\Desktop\AI-BE\Agentic-AI-resume\Resume.Application\obj\Debug\net10.0\ref\Resume.Application.dll

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ShivaaniBalaji\\Desktop\\AI\\Agentic-AI-resume\\Resume.Domain\\Resume.Domain.csproj": {}
+    "C:\\Users\\Shivaani\\OneDrive\\Desktop\\AI-BE\\Agentic-AI-resume\\Resume.Domain\\Resume.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ShivaaniBalaji\\Desktop\\AI\\Agentic-AI-resume\\Resume.Domain\\Resume.Domain.csproj": {
+    "C:\\Users\\Shivaani\\OneDrive\\Desktop\\AI-BE\\Agentic-AI-resume\\Resume.Domain\\Resume.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ShivaaniBalaji\\Desktop\\AI\\Agentic-AI-resume\\Resume.Domain\\Resume.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Shivaani\\OneDrive\\Desktop\\AI-BE\\Agentic-AI-resume\\Resume.Domain\\Resume.Domain.csproj",
         "projectName": "Resume.Domain",
-        "projectPath": "C:\\Users\\ShivaaniBalaji\\Desktop\\AI\\Agentic-AI-resume\\Resume.Domain\\Resume.Domain.csproj",
-        "packagesPath": "C:\\Users\\ShivaaniBalaji\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ShivaaniBalaji\\Desktop\\AI\\Agentic-AI-resume\\Resume.Domain\\obj\\",
+        "projectPath": "C:\\Users\\Shivaani\\OneDrive\\Desktop\\AI-BE\\Agentic-AI-resume\\Resume.Domain\\Resume.Domain.csproj",
+        "packagesPath": "C:\\Users\\Shivaani\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Shivaani\\OneDrive\\Desktop\\AI-BE\\Agentic-AI-resume\\Resume.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ShivaaniBalaji\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Shivaani\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -39,12 +39,18 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net10.0": {
           "framework": "net10.0",
           "targetAlias": "net10.0",
+          "dependencies": {
+            "Pgvector": {
+              "target": "Package",
+              "version": "[0.3.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -61,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.303/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.400/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
