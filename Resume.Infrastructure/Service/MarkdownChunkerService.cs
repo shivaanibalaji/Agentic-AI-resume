@@ -14,6 +14,16 @@ public class MarkdownChunkerService(IOptions<KnowledgeBaseOptions> options) : IM
     private readonly int _chunkSize = Math.Max(options.Value.ChunkSize, 100);
     private readonly int _chunkOverlap = Math.Clamp(options.Value.ChunkOverlap, 0, Math.Max(options.Value.ChunkSize / 2, 1));
 
+    /// <summary>
+    /// Generic, content-agnostic words that indicate a section is an overview, summary, or
+    /// introduction of its document. Not tied to any specific knowledge-base topic, so it
+    /// applies uniformly as new documents and sections are added.
+    /// </summary>
+    private static readonly string[] OverviewHeadingMarkers =
+    {
+        "summary", "overview", "introduction", "background", "profile", "objective", "highlights", "journey"
+    };
+
     /// <inheritdoc />
     public IReadOnlyList<MarkdownChunkDto> Chunk(MarkdownDocumentDto document)
     {
@@ -22,18 +32,27 @@ public class MarkdownChunkerService(IOptions<KnowledgeBaseOptions> options) : IM
 
         foreach ((string Heading, string Content) section in SplitIntoSections(document.Content))
         {
+            bool isSummary = IsOverviewHeading(section.Heading);
+
             foreach (string piece in SplitSection(section.Content))
             {
                 chunks.Add(new MarkdownChunkDto
                 {
                     Section = section.Heading,
                     ChunkIndex = chunkIndex++,
-                    Content = piece
+                    Content = piece,
+                    IsSummary = isSummary
                 });
             }
         }
 
         return chunks;
+    }
+
+    private static bool IsOverviewHeading(string heading)
+    {
+        string lower = heading.ToLowerInvariant();
+        return OverviewHeadingMarkers.Any(marker => lower.Contains(marker, StringComparison.Ordinal));
     }
 
     private static List<(string Heading, string Content)> SplitIntoSections(string content)

@@ -27,6 +27,10 @@ public class DocumentChunkConfiguration : IEntityTypeConfiguration<DocumentChunk
         builder.Property(c => c.ChunkIndex)
             .IsRequired();
 
+        builder.Property(c => c.IsSummary)
+            .IsRequired()
+            .HasDefaultValue(false);
+
         builder.Property(c => c.Embedding)
             .IsRequired()
             .HasColumnType("vector(1024)");

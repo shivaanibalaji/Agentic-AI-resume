@@ -38,4 +38,11 @@ public sealed class KnowledgeChunkHitDto
     /// </summary>
     [DataMember]
     public double CosineDistance { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this chunk was marked as an overview, summary,
+    /// or introduction during ingestion.
+    /// </summary>
+    [DataMember]
+    public bool IsSummary { get; set; }
 }

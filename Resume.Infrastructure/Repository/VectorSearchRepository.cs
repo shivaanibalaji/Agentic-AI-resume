@@ -16,6 +16,19 @@ public class VectorSearchRepository(ResumeDbContext context) : IVectorSearchRepo
         float[] queryEmbedding,
         int topK,
         CancellationToken cancellationToken = default)
+        => await SearchWithLimitAsync(queryEmbedding, topK, cancellationToken);
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyList<KnowledgeChunkHitDto>> SearchCandidatesAsync(
+        float[] queryEmbedding,
+        int candidateCount,
+        CancellationToken cancellationToken = default)
+        => await SearchWithLimitAsync(queryEmbedding, candidateCount, cancellationToken);
+
+    private async Task<IReadOnlyList<KnowledgeChunkHitDto>> SearchWithLimitAsync(
+        float[] queryEmbedding,
+        int limit,
+        CancellationToken cancellationToken)
     {
         Vector queryVector = new Vector(queryEmbedding);
 
@@ -25,11 +38,12 @@ public class VectorSearchRepository(ResumeDbContext context) : IVectorSearchRepo
                        c."Section" AS "Section",
                        c."ChunkIndex" AS "ChunkIndex",
                        c."Content" AS "Content",
-                       c."Embedding" <=> {queryVector} AS "CosineDistance"
+                       c."Embedding" <=> {queryVector} AS "CosineDistance",
+                       c."IsSummary" AS "IsSummary"
                 FROM "DocumentChunks" AS c
                 JOIN "Documents" AS d ON d."Id" = c."DocumentId"
                 ORDER BY c."Embedding" <=> {queryVector}
-                LIMIT {topK}
+                LIMIT {limit}
                 """)
             .ToListAsync(cancellationToken);
 

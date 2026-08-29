@@ -48,6 +48,10 @@ public static class ServiceExtension
         services.AddSingleton<IMarkdownChunkerService, MarkdownChunkerService>();
         services.AddScoped<IMarkdownDocumentLoaderService, MarkdownDocumentLoaderService>();
 
+        services.AddScoped<IJobDescriptionExtractionService, JobDescriptionExtractionService>();
+        services.AddScoped<IJobRequirementMatcherService, JobRequirementMatcherService>();
+        services.AddScoped<IRetrievalRankingService, RetrievalRankingService>();
+
         services.Configure<OllamaOptions>(configuration.GetSection(OllamaOptions.SectionName));
         services.AddHttpClient<IEmbeddingService, OllamaEmbeddingService>((serviceProvider, httpClient) =>
             ConfigureOllamaHttpClient(serviceProvider, httpClient));

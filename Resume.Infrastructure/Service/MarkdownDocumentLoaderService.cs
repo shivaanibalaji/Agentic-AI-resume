@@ -26,7 +26,8 @@ public class MarkdownDocumentLoaderService(IOptions<KnowledgeBaseOptions> option
 
         List<MarkdownDocumentDto> documents = new List<MarkdownDocumentDto>();
 
-        foreach (string filePath in Directory.EnumerateFiles(directory, "*.md").OrderBy(file => file, StringComparer.OrdinalIgnoreCase))
+        foreach (string filePath in Directory.EnumerateFiles(directory, "*.md", SearchOption.AllDirectories)
+            .OrderBy(file => file, StringComparer.OrdinalIgnoreCase))
         {
             string content = File.ReadAllText(filePath);
 

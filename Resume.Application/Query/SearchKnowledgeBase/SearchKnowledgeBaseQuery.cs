@@ -1,5 +1,6 @@
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Options;
 using Resume.Application.DTO.Knowledge;
 using Resume.Application.Interfaces.IRepository;
 using Resume.Application.Interfaces.IService;
@@ -29,11 +30,14 @@ public sealed class SearchKnowledgeBaseQueryValidator : AbstractValidator<Search
 }
 
 /// <summary>
-/// Handler that searches the knowledge base using an embedding of the question.
+/// Handler that searches the knowledge base using an embedding of the question followed by
+/// hybrid semantic, keyword, and section re-ranking.
 /// </summary>
 public sealed class SearchKnowledgeBaseQueryHandler(
     IEmbeddingService embeddingService,
-    IVectorSearchRepository vectorSearchRepository)
+    IVectorSearchRepository vectorSearchRepository,
+    IRetrievalRankingService retrievalRankingService,
+    IOptions<KnowledgeBaseOptions> options)
     : IRequestHandler<SearchKnowledgeBaseQuery, IReadOnlyList<SearchResultDto>>
 {
     private const int DefaultTopK = 5;
@@ -47,19 +51,11 @@ public sealed class SearchKnowledgeBaseQueryHandler(
     public async Task<IReadOnlyList<SearchResultDto>> Handle(SearchKnowledgeBaseQuery request, CancellationToken cancellationToken)
     {
         int topK = request.TopK <= 0 ? DefaultTopK : request.TopK;
+        int candidatePoolSize = Math.Max(topK, options.Value.CandidatePoolSize);
 
         float[] queryEmbedding = await embeddingService.GenerateEmbeddingAsync(request.Question, cancellationToken);
-        IReadOnlyList<KnowledgeChunkHitDto> hits = await vectorSearchRepository.SearchAsync(queryEmbedding, topK, cancellationToken);
+        IReadOnlyList<KnowledgeChunkHitDto> candidates = await vectorSearchRepository.SearchCandidatesAsync(queryEmbedding, candidatePoolSize, cancellationToken);
 
-        return hits
-            .Select(hit => new SearchResultDto
-            {
-                Document = hit.DocumentFileName,
-                Section = hit.Section,
-                ChunkIndex = hit.ChunkIndex,
-                Content = hit.Content,
-                Score = Math.Round(Math.Clamp(1d - hit.CosineDistance, 0d, 1d), 4)
-            })
-            .ToList();
+        return retrievalRankingService.ReRank(candidates, request.Question, topK);
     }
 }

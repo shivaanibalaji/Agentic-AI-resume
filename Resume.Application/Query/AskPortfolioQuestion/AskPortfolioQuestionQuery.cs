@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Options;
 using Resume.Application.DTO.Chat;
 using Resume.Application.DTO.Knowledge;
 using Resume.Application.Interfaces.IRepository;
@@ -36,7 +37,9 @@ public sealed class AskPortfolioQuestionQueryValidator : AbstractValidator<AskPo
 public sealed class AskPortfolioQuestionQueryHandler(
     IEmbeddingService embeddingService,
     IVectorSearchRepository vectorSearchRepository,
-    ILlmService llmService)
+    IRetrievalRankingService retrievalRankingService,
+    ILlmService llmService,
+    IOptions<KnowledgeBaseOptions> options)
     : IRequestHandler<AskPortfolioQuestionQuery, ChatResponseDto>
 {
     private const int DefaultTopK = 5;
@@ -58,11 +61,13 @@ public sealed class AskPortfolioQuestionQueryHandler(
     public async Task<ChatResponseDto> Handle(AskPortfolioQuestionQuery request, CancellationToken cancellationToken)
     {
         int topK = request.TopK <= 0 ? DefaultTopK : request.TopK;
+        int candidatePoolSize = Math.Max(topK, options.Value.CandidatePoolSize);
 
         float[] questionEmbedding = await embeddingService.GenerateEmbeddingAsync(request.Message, cancellationToken);
-        IReadOnlyList<KnowledgeChunkHitDto> hits = await vectorSearchRepository.SearchAsync(questionEmbedding, topK, cancellationToken);
+        IReadOnlyList<KnowledgeChunkHitDto> candidates = await vectorSearchRepository.SearchCandidatesAsync(questionEmbedding, candidatePoolSize, cancellationToken);
+        IReadOnlyList<SearchResultDto> results = retrievalRankingService.ReRank(candidates, request.Message, topK);
 
-        if (hits.Count == 0)
+        if (results.Count == 0)
         {
             return new ChatResponseDto
             {
@@ -73,8 +78,8 @@ public sealed class AskPortfolioQuestionQueryHandler(
 
         string context = string.Join(
             "\n\n",
-            hits.Select((hit, index) =>
-                $"[{index + 1}] Source: {hit.DocumentFileName} | Section: {hit.Section} | Chunk: {hit.ChunkIndex}\n{hit.Content}"));
+            results.Select((result, index) =>
+                $"[{index + 1}] Source: {result.Document} | Section: {result.Section} | Chunk: {result.ChunkIndex}\n{result.Content}"));
 
         string userPrompt = $"""
             Portfolio context:
@@ -92,12 +97,12 @@ public sealed class AskPortfolioQuestionQueryHandler(
             answer = "The information is not available in the portfolio.";
         }
 
-        List<SourceDto> sources = hits
-            .Select(hit => new SourceDto
+        List<SourceDto> sources = results
+            .Select(result => new SourceDto
             {
-                Document = hit.DocumentFileName,
-                Section = hit.Section,
-                ChunkIndex = hit.ChunkIndex
+                Document = result.Document,
+                Section = result.Section,
+                ChunkIndex = result.ChunkIndex
             })
             .ToList();
 

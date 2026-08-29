@@ -1,5 +1,11 @@
 # Education
 
+## Education Summary
+
+Shivaani Balaji holds a **Bachelor of Engineering (B.E.) in Computer Science and Engineering** from **R.M.K. Engineering College**, graduating in **May 2023** with a CGPA of **9.43 out of 10.0**.
+
+Her earlier education was completed at **St. Anthony's Girls Higher Secondary School**, where she studied in the **Bio-Maths** group and scored **550 / 600** in Class 12 and **493 / 500** in Class 10.
+
 ## Bachelor of Engineering in Computer Science and Engineering
 
 - Degree: Bachelor of Engineering (B.E.)

@@ -79,8 +79,13 @@ public sealed class IngestKnowledgeBaseCommandHandler(
                     Content = chunk.Content,
                     Section = chunk.Section,
                     ChunkIndex = chunk.ChunkIndex,
+                    IsSummary = chunk.IsSummary,
                     Embedding = new Vector(embedding),
-                    Metadata = JsonSerializer.Serialize(new { characters = chunk.Content.Length }),
+                    Metadata = JsonSerializer.Serialize(new
+                    {
+                        characters = chunk.Content.Length,
+                        isSummary = chunk.IsSummary
+                    }),
                     CreatedAt = DateTime.UtcNow
                 });
             }
@@ -89,12 +94,41 @@ public sealed class IngestKnowledgeBaseCommandHandler(
             totalChunks += entities.Count;
         }
 
+        int deletedDocuments = await RemoveRemovedFilesAsync(sources, cancellationToken);
+
         return new IngestionResultDto
         {
             TotalFiles = sources.Count,
             NewDocuments = newDocuments,
             UpdatedDocuments = updatedDocuments,
+            DeletedDocuments = deletedDocuments,
             TotalChunks = totalChunks
         };
+    }
+
+    private async Task<int> RemoveRemovedFilesAsync(
+        IReadOnlyList<MarkdownDocumentDto> sources,
+        CancellationToken cancellationToken)
+    {
+        HashSet<string> existingFileNames = sources
+            .Select(source => source.FileName)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        IReadOnlyList<Document> documents = await documentRepository.GetAllAsync(cancellationToken);
+
+        int deletedDocuments = 0;
+
+        foreach (Document document in documents)
+        {
+            if (existingFileNames.Contains(document.FileName))
+            {
+                continue;
+            }
+
+            await documentRepository.DeleteAsync(document, cancellationToken);
+            deletedDocuments++;
+        }
+
+        return deletedDocuments;
     }
 }

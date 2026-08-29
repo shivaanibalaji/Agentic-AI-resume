@@ -1,8 +1,10 @@
 # Kascade360
 
-## Project Overview
+## Project - Kascade360
 
-**Kascade360** is an enterprise taxation and accounting application developed for US client.
+**Shivaani Balaji** developed and worked on the **Kascade360** project as part of her role as a **Full Stack .NET Developer and L2 Software Engineer at Propel Technology Group Inc.**
+
+**Kascade360** is an enterprise taxation and accounting application developed for a US client.
 
 The application involves taxation, accounting, financial data, reporting, Excel processing, data mapping, and data-intensive enterprise workflows.
 

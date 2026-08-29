@@ -1,5 +1,21 @@
 # Experience
 
+## Experience Summary
+
+Shivaani Balaji is a **Full Stack .NET Developer with over two years of professional experience** as an **L2 Software Engineer at Propel Technology Group Inc.** since **August 2024**, based in **Chennai, Tamil Nadu**.
+
+She has professional experience in:
+
+* Backend and full-stack enterprise application development
+* API and microservices development
+* Data processing (Excel, Parquet, DuckDB)
+* Asynchronous workflows
+* Distributed systems and messaging
+* Frontend integration
+* Unit testing and production support
+
+Her main project at Propel is **Kascade360**, an enterprise taxation and accounting application built for US clients. She earlier gained industry experience through an internship at **Virtusa**.
+
 ## Propel Technology Group Inc.
 
 ### L2 Software Engineer
@@ -7,7 +23,26 @@
 **August 2024 – Present**
 **Chennai, Tamil Nadu**
 
-I work as an **L2 Software Engineer at Propel Technology Group Inc.**, contributing to enterprise applications involving taxation, accounting, financial data, reporting, and data-intensive workflows.
+Shivaani Balaji is currently working as an **L2 Software Engineer at Propel Technology Group Inc.** (also referred to as **Propel Technologies** or **Propel**), contributing to enterprise applications involving taxation, accounting, financial data, reporting, and data-intensive workflows.
+
+She has over **two years of professional experience** as a software engineer.
+
+### Key Project: Kascade360
+
+At Propel, Shivaani Balaji works on the **Kascade360** project, an enterprise **taxation and accounting application developed for US clients**.
+
+Kascade360 involves taxation, accounting, financial data, reporting, Excel processing, data mapping, and data-intensive enterprise workflows.
+
+Her work on the project includes:
+
+* Backend and API development
+* Excel-to-Parquet data-processing architecture
+* Dynamic data processing with C# ExpandoObject
+* DuckDB and Parquet generation
+* Excel import/export workflows
+* Asynchronous background processing
+* CQRS and MediatR architecture
+* AdminService microservice (designed and developed from scratch)
 
 ### Responsibilities
 

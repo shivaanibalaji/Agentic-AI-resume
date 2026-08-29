@@ -27,6 +27,12 @@ public sealed class IngestionResultDto
     public int UpdatedDocuments { get; set; }
 
     /// <summary>
+    /// Gets or sets the number of documents removed because their source files no longer exist.
+    /// </summary>
+    [DataMember]
+    public int DeletedDocuments { get; set; }
+
+    /// <summary>
     /// Gets or sets the total number of chunks stored.
     /// </summary>
     [DataMember]

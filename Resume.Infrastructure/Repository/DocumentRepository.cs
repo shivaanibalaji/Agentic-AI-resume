@@ -15,6 +15,10 @@ public class DocumentRepository(ResumeDbContext context) : IDocumentRepository
         => context.Documents.FirstOrDefaultAsync(document => document.FileName == fileName, cancellationToken);
 
     /// <inheritdoc />
+    public async Task<IReadOnlyList<Document>> GetAllAsync(CancellationToken cancellationToken = default)
+        => await context.Documents.ToListAsync(cancellationToken);
+
+    /// <inheritdoc />
     public async Task<Document> AddAsync(Document document, CancellationToken cancellationToken = default)
     {
         await context.Documents.AddAsync(document, cancellationToken);
@@ -27,6 +31,13 @@ public class DocumentRepository(ResumeDbContext context) : IDocumentRepository
     public async Task UpdateAsync(Document document, CancellationToken cancellationToken = default)
     {
         context.Documents.Update(document);
+        await context.SaveChangesAsync(cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task DeleteAsync(Document document, CancellationToken cancellationToken = default)
+    {
+        context.Documents.Remove(document);
         await context.SaveChangesAsync(cancellationToken);
     }
 }

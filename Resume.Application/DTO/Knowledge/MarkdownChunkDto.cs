@@ -25,4 +25,11 @@ public sealed class MarkdownChunkDto
     /// </summary>
     [DataMember]
     public string Content { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this chunk is an overview, summary, or
+    /// introduction of its document, derived from its section heading during chunking.
+    /// </summary>
+    [DataMember]
+    public bool IsSummary { get; set; }
 }

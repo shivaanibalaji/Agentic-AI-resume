@@ -1,12 +1,28 @@
 # Skills
 
+## Skills Overview
+
+Shivaani Balaji is a **Full Stack .NET Developer** whose skill set spans backend development, frontend development, databases, data processing, messaging, cloud and DevOps, and Generative AI.
+
+Her core technical skills include:
+
+* **Languages:** C# (C Sharp), SQL, TypeScript, JavaScript, HTML5, CSS
+* **Backend:** .NET (Dot Net), ASP.NET Core, Entity Framework Core (EF Core), LINQ, REST APIs, CQRS, MediatR
+* **Frontend:** React, Angular, TypeScript, AG Grid
+* **Databases:** PostgreSQL, SQL Server, Redis, DuckDB
+* **Data processing:** Apache Parquet, Excel processing, ExpandoObject, dynamic data processing
+* **Messaging:** RabbitMQ, MassTransit, SignalR, gRPC
+* **Cloud and DevOps:** Microsoft Azure, Docker, Kubernetes, CI/CD, Git, GitHub
+* **Testing:** xUnit, Moq, unit testing
+* **Architecture:** Clean Architecture, Microservices, CQRS, SOLID, design patterns
+
 ## Programming Languages
 
-### C#
+### C# (also known as C Sharp)
 
-C# is my primary programming language for backend and enterprise application development.
+**C# (pronounced "C Sharp")** is her primary programming language for backend and enterprise application development.
 
-I use C# for implementing APIs, business logic, data processing, asynchronous workflows, service integrations, and application-level functionality.
+She uses C# for implementing APIs, business logic, data processing, asynchronous workflows, service integrations, and application-level functionality.
 
 ### SQL
 
@@ -28,9 +44,9 @@ I have experience building and maintaining web application interfaces using HTML
 
 ## Backend Development
 
-### .NET 8
+### .NET (also known as Dot Net)
 
-.NET 8 is one of my primary technologies for enterprise backend development.
+**.NET (also called "Dot Net")** is one of her primary technologies for enterprise backend development.
 
 ### ASP.NET Core
 
