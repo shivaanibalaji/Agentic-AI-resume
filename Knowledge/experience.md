@@ -1,146 +1,141 @@
-# Professional Experience
+# Experience
 
-## Software Engineer
+## Propel Technology Group Inc.
 
-### Role
+### L2 Software Engineer
 
-Software Engineer
+**August 2024 – Present**
+**Chennai, Tamil Nadu**
 
-### Primary Responsibilities
+I work as an **L2 Software Engineer at Propel Technology Group Inc.**, contributing to enterprise applications involving taxation, accounting, financial data, reporting, and data-intensive workflows.
 
-I work on backend application development and enterprise software systems.
+### Responsibilities
 
-My responsibilities include designing and implementing REST APIs, developing business logic, working with relational databases, debugging production issues, and improving existing application functionality.
+My responsibilities include understanding business requirements, analyzing existing application architecture, designing technical solutions, implementing features, writing tests, debugging issues, optimizing application performance, and supporting production issues.
 
-## Backend Development
+I work across multiple layers of enterprise applications, including APIs, business logic, data access, data processing, asynchronous workflows, distributed communication, frontend integration, and deployment-related workflows.
 
-I have experience developing backend services using:
+### Backend Development
 
-- C#
-- .NET
-- ASP.NET Core
-- Entity Framework Core
-- REST APIs
-- LINQ
-- Dependency Injection
-- MediatR
-- FluentValidation
+I develop and maintain enterprise applications using:
 
-I work with layered architectures where API controllers, application services, domain logic, and infrastructure components are separated.
+* C#
+* .NET 8
+* ASP.NET Core
+* Entity Framework Core
+* LINQ
+* REST APIs
+* PostgreSQL
+* SQL Server
+* MediatR
+* CQRS
 
-## Database Development
+I follow OOP, SOLID principles, Clean Architecture, and established enterprise coding standards.
 
-I have experience working with relational databases and SQL.
+### Application Architecture
 
-Technologies include:
+I work with architectural patterns including:
 
-- PostgreSQL
-- SQL
-- Entity Framework Core
-- Database queries
-- Entity relationships
-- Query optimization
+* Clean Architecture
+* CQRS
+* MediatR
+* Microservices
+* Strategy Pattern
+* Factory Pattern
+* Event-driven architecture
+* Publish/Subscribe architecture
 
-I have worked with tables, relationships, filtering, grouping, joins, and database-driven business logic.
+### Data Processing
 
-## API Development
+I have worked on data-intensive workflows involving Excel, Parquet, and DuckDB.
 
-I have developed REST APIs using ASP.NET Core.
+I designed and implemented an Excel-to-Parquet processing approach to reduce dependency on evolving Excel schemas.
 
-Typical API responsibilities include:
+I worked with `ExpandoObject` to represent dynamically changing Excel columns without tightly coupling processing logic to fixed DTO models.
 
-1. Receiving HTTP requests.
-2. Validating request data.
-3. Executing application/business logic.
-4. Accessing database data.
-5. Transforming entities into DTOs.
-6. Returning appropriate HTTP responses.
+I also used DuckDB to generate Parquet files from dynamically structured Excel data.
 
-## Enterprise Application Development
+### Asynchronous Processing
 
-I have worked on enterprise applications containing complex business rules and reporting requirements.
+I implemented asynchronous Excel import processing using a publish/subscribe background-job architecture.
 
-Some of the work involves:
+This allows long-running file-processing operations to execute independently instead of blocking API requests.
 
-- Data synchronization
-- Diagnostic data processing
-- Tax-related reporting
-- Excel report generation
-- Template-based report generation
-- Data transformation
-- Parquet data processing
-- Database operations
+### Microservices
 
-## Performance Optimization
+I designed and developed the **AdminService microservice from scratch**.
 
-I have worked on optimizing application logic by:
+The implementation included:
 
-- Reducing unnecessary database calls
-- Improving LINQ queries
-- Avoiding duplicate processing
-- Reusing fetched data
-- Separating data retrieval from processing
-- Improving collection operations
-- Using appropriate asynchronous APIs
+* APIs
+* Business logic
+* Data access
+* Validations
+* Service functionality
+* Integration with existing application architecture
 
-## Code Quality
+### Distributed Technologies
 
-I focus on writing maintainable and reusable code.
+I have worked with:
 
-Practices I use include:
+* RabbitMQ
+* SignalR
+* gRPC
+* Redis
+* Background Services
+* Publish/Subscribe
 
-- SOLID principles
-- Dependency Injection
-- Interfaces
-- Strategy Pattern
-- Service abstraction
-- DTOs
-- Async/await
-- Separation of concerns
-- Validation
-- Exception handling
+These technologies are used for asynchronous processing, distributed communication, caching, and real-time application workflows.
 
-## Technologies
+### Frontend Development
 
-### Backend
+I have worked with:
 
-- C#
-- .NET
-- ASP.NET Core
-- Entity Framework Core
-- REST API
+* React
+* TypeScript
+* JavaScript
+* HTML5
+* CSS
 
-### Database
+I have implemented frontend fixes and integrated frontend workflows with backend REST APIs.
 
-- PostgreSQL
-- SQL
+### Testing and Quality
 
-### Frontend
+I perform:
 
-- Angular
-- React
-- TypeScript
+* Unit testing
+* Debugging
+* Production issue analysis
+* Code reviews
+* Refactoring
+* Performance optimization
 
-### Other Technologies
+I use **xUnit and Moq** for unit testing.
 
-- Git
-- Docker
-- Azure DevOps
-- Redis
-- SignalR
-- Parquet
-- DuckDB
+### Agile Development
 
-## Learning and Development
+I participate in Agile development activities including:
 
-I am currently expanding my knowledge in:
+* Sprint planning
+* Daily stand-ups
+* Backlog refinement
+* Code reviews
+* Development
+* Testing
+* Debugging
+* Production support
 
-- Generative AI
-- Large Language Models
-- RAG
-- Embeddings
-- Vector databases
-- pgvector
-- Prompt engineering
-- AI agents
-- AI application architecture
+
+---
+
+## Virtusa
+
+### Internship
+
+**Earlier Industry Experience**
+
+I gained industry experience through an internship at **Virtusa**.
+
+The internship helped strengthen my foundation in software development and introduced me to professional enterprise application development practices.
+
+It provided exposure to software development processes, team collaboration, application development, and enterprise engineering practices.

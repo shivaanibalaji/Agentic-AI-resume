@@ -1,67 +1,85 @@
 # About
 
-## Profile
+## Professional Profile
 
-My name is Shivaani Balaji. I am a software engineer specializing in backend development and modern web application development.
+### Introduction
 
-I have experience building enterprise applications using .NET, ASP.NET Core, C#, Entity Framework Core, PostgreSQL, REST APIs, Angular, and React.
+I am **Shivaani Balaji**, a **Full Stack .NET Developer and L2 Software Engineer at Propel Technology Group Inc.**, with **2+ years of experience** building and maintaining enterprise applications.
 
-My primary area of interest is full stack
-+ engineering, API development, database design, distributed systems, and AI-powered applications.
+My experience covers backend development, frontend development, API development, data processing, distributed systems, microservices, asynchronous workflows, reporting applications, and enterprise software architecture.
 
-## Professional Focus
+My primary technical expertise is in **C#, .NET 8, ASP.NET Core, Entity Framework Core, TypeScript, REST APIs, PostgreSQL, CQRS, MediatR, Microservices, and Clean Architecture**.
 
-My main technical interests include:
+### Professional Focus
 
-- Backend development
-- REST API development
-- ASP.NET Core
-- C#
-- Entity Framework Core
-- PostgreSQL
-- SQL
-- Angular
-- React
-- TypeScript
-- Distributed systems
-- Microservices
-- Generative AI
-- Retrieval-Augmented Generation (RAG)
-- Vector databases
-- LLM integration
+My primary focus is backend and full-stack enterprise application development.
 
-## Current AI Interests
+I enjoy working on applications where I can understand a business requirement, design a technical solution, implement it across the required application layers, test the implementation, debug issues, optimize performance, and support the feature through deployment.
 
-I am currently learning and building applications around Generative AI.
+### Enterprise Application Experience
 
-My current AI project is an AI-powered resume and portfolio chatbot.
+I have worked on enterprise applications involving **taxation, accounting, financial data, reporting, Excel processing, and large-scale data-processing workflows**.
 
-The application uses Retrieval-Augmented Generation (RAG) to retrieve relevant information from a knowledge base before sending the context to a Large Language Model.
+My experience includes developing APIs, implementing business logic, designing microservices, processing large datasets, implementing asynchronous workflows, and integrating distributed application components.
 
-The planned AI stack includes:
+### Engineering Approach
 
-- Qwen3 8B as the LLM
-- Qwen3-Embedding 0.6B as the embedding model
-- Ollama for local model execution
-- PostgreSQL with pgvector for vector storage
-- ASP.NET Core for the backend
-- React with TypeScript for the frontend
+I follow software engineering principles and architectural practices including:
 
-## Development Approach
+* Object-Oriented Programming
+* SOLID principles
+* Clean Architecture
+* CQRS
+* MediatR / Mediator Pattern
+* Strategy Pattern
+* Factory Pattern
+* Dependency Injection
+* Separation of Concerns
+* Asynchronous Programming
+* Unit Testing
 
-I prefer building applications using clean architecture and separation of concerns.
+### Full Stack Experience
 
-I focus on:
+Although my primary expertise is backend development, I also have experience working on frontend applications using **React, TypeScript, JavaScript, HTML5, and CSS**.
 
-- Maintainable code
-- Reusable services
-- Clear API contracts
-- Proper dependency injection
-- Error handling
-- Performance
-- Testability
-- Scalable architecture
+This allows me to understand features across the complete application stack, from frontend interaction to REST APIs, business logic, data access, and database operations.
 
-## Career Goal
+### Distributed Systems
 
-My goal is to continue growing as a backend and AI-focused software engineer and build production-quality applications that combine traditional software engineering with modern AI technologies.
+I have worked with distributed-system technologies including:
+
+* RabbitMQ
+* SignalR
+* gRPC
+* Redis
+* Background Services
+* Publish/Subscribe architecture
+* Microservices
+
+### Cloud and DevOps
+
+My enterprise development experience also includes:
+
+* Azure
+* Azure Blob Storage
+* Azure Key Vault
+* Azure DevOps
+* Docker
+* Kubernetes
+* CI/CD
+* Git
+* GitHub
+
+### Generative AI Interests
+
+I am currently expanding my knowledge in **Generative AI, Large Language Models, Retrieval-Augmented Generation, embeddings, vector databases, and Agentic AI**.
+
+I am particularly interested in how modern AI technologies can be integrated with enterprise applications.
+
+My goal is to combine strong software engineering fundamentals with AI technologies to build reliable, scalable, and intelligent applications.
+
+### Career Goal
+
+My long-term goal is to grow as a software engineer specializing in **backend engineering, distributed systems, Generative AI, RAG, LLM applications, and Agentic AI**.
+
+I am particularly interested in building systems where AI can understand context, retrieve relevant information, reason over data, and interact with enterprise applications.
