@@ -1,25 +1,35 @@
 using System.Text;
 using Microsoft.Extensions.Options;
 using Resume.Application;
-using Resume.Application.Interfaces;
+using Resume.Application.DTO.Knowledge;
+using Resume.Application.Interfaces.IService;
 
-namespace Resume.Infrastructure.Knowledge;
+namespace Resume.Infrastructure.Service;
 
-public class MarkdownChunker(IOptions<KnowledgeBaseOptions> options) : IMarkdownChunker
+/// <summary>
+/// Splits markdown documents into smaller chunks suitable for embedding and search.
+/// </summary>
+public class MarkdownChunkerService(IOptions<KnowledgeBaseOptions> options) : IMarkdownChunkerService
 {
     private readonly int _chunkSize = Math.Max(options.Value.ChunkSize, 100);
     private readonly int _chunkOverlap = Math.Clamp(options.Value.ChunkOverlap, 0, Math.Max(options.Value.ChunkSize / 2, 1));
 
-    public IReadOnlyList<MarkdownChunk> Chunk(MarkdownDocument document)
+    /// <inheritdoc />
+    public IReadOnlyList<MarkdownChunkDto> Chunk(MarkdownDocumentDto document)
     {
-        var chunks = new List<MarkdownChunk>();
-        var chunkIndex = 0;
+        List<MarkdownChunkDto> chunks = new List<MarkdownChunkDto>();
+        int chunkIndex = 0;
 
-        foreach (var section in SplitIntoSections(document.Content))
+        foreach ((string Heading, string Content) section in SplitIntoSections(document.Content))
         {
-            foreach (var piece in SplitSection(section.Content))
+            foreach (string piece in SplitSection(section.Content))
             {
-                chunks.Add(new MarkdownChunk(section.Heading, chunkIndex++, piece));
+                chunks.Add(new MarkdownChunkDto
+                {
+                    Section = section.Heading,
+                    ChunkIndex = chunkIndex++,
+                    Content = piece
+                });
             }
         }
 
@@ -28,15 +38,15 @@ public class MarkdownChunker(IOptions<KnowledgeBaseOptions> options) : IMarkdown
 
     private static List<(string Heading, string Content)> SplitIntoSections(string content)
     {
-        var sections = new List<(string Heading, string Content)>();
-        var currentHeading = "(Introduction)";
-        var body = new StringBuilder();
+        List<(string Heading, string Content)> sections = new List<(string Heading, string Content)>();
+        string currentHeading = "(Introduction)";
+        StringBuilder body = new StringBuilder();
 
-        foreach (var rawLine in content.Split('\n'))
+        foreach (string rawLine in content.Split('\n'))
         {
-            var line = rawLine.TrimEnd('\r');
+            string line = rawLine.TrimEnd('\r');
 
-            if (TryGetHeading(line, out var heading))
+            if (TryGetHeading(line, out string heading))
             {
                 AddSection(sections, currentHeading, body);
                 currentHeading = heading;
@@ -54,7 +64,7 @@ public class MarkdownChunker(IOptions<KnowledgeBaseOptions> options) : IMarkdown
 
     private static void AddSection(List<(string Heading, string Content)> sections, string heading, StringBuilder body)
     {
-        var content = body.ToString().Trim();
+        string content = body.ToString().Trim();
 
         if (content.Length > 0)
         {
@@ -68,14 +78,14 @@ public class MarkdownChunker(IOptions<KnowledgeBaseOptions> options) : IMarkdown
     {
         heading = string.Empty;
 
-        var trimmed = line.Trim();
+        string trimmed = line.Trim();
 
         if (trimmed.Length == 0 || trimmed[0] != '#')
         {
             return false;
         }
 
-        var hashes = 0;
+        int hashes = 0;
 
         while (hashes < trimmed.Length && trimmed[hashes] == '#')
         {
@@ -100,15 +110,15 @@ public class MarkdownChunker(IOptions<KnowledgeBaseOptions> options) : IMarkdown
             yield break;
         }
 
-        var start = 0;
+        int start = 0;
 
         while (start < content.Length)
         {
-            var end = Math.Min(start + _chunkSize, content.Length);
+            int end = Math.Min(start + _chunkSize, content.Length);
 
             if (end < content.Length)
             {
-                var boundary = content.LastIndexOf("\n\n", end - 1, end - start, StringComparison.Ordinal);
+                int boundary = content.LastIndexOf("\n\n", end - 1, end - start, StringComparison.Ordinal);
 
                 if (boundary > start + (_chunkSize / 2))
                 {
@@ -116,7 +126,7 @@ public class MarkdownChunker(IOptions<KnowledgeBaseOptions> options) : IMarkdown
                 }
             }
 
-            var piece = content[start..end].Trim();
+            string piece = content[start..end].Trim();
 
             if (piece.Length > 0)
             {

@@ -1,20 +1,26 @@
 using Microsoft.EntityFrameworkCore;
 using Pgvector;
-using Resume.Application.Interfaces;
+using Resume.Application.DTO.Knowledge;
+using Resume.Application.Interfaces.IRepository;
+using Resume.Infrastructure.Persistence;
 
-namespace Resume.Infrastructure.Persistence.Repositories;
+namespace Resume.Infrastructure.Repository;
 
+/// <summary>
+/// Provides vector-based similarity search over knowledge chunks.
+/// </summary>
 public class VectorSearchRepository(ResumeDbContext context) : IVectorSearchRepository
 {
-    public async Task<IReadOnlyList<KnowledgeChunkHit>> SearchAsync(
+    /// <inheritdoc />
+    public async Task<IReadOnlyList<KnowledgeChunkHitDto>> SearchAsync(
         float[] queryEmbedding,
         int topK,
         CancellationToken cancellationToken = default)
     {
-        var queryVector = new Vector(queryEmbedding);
+        Vector queryVector = new Vector(queryEmbedding);
 
-        var rows = await context.Database
-            .SqlQuery<KnowledgeChunkHitRow>($"""
+        List<KnowledgeChunkHitDto> rows = await context.Database
+            .SqlQuery<KnowledgeChunkHitDto>($"""
                 SELECT d."FileName" AS "DocumentFileName",
                        c."Section" AS "Section",
                        c."ChunkIndex" AS "ChunkIndex",
@@ -27,20 +33,6 @@ public class VectorSearchRepository(ResumeDbContext context) : IVectorSearchRepo
                 """)
             .ToListAsync(cancellationToken);
 
-        return rows
-            .Select(row => new KnowledgeChunkHit(
-                row.DocumentFileName,
-                row.Section,
-                row.ChunkIndex,
-                row.Content,
-                row.CosineDistance))
-            .ToList();
+        return rows;
     }
-
-    private sealed record KnowledgeChunkHitRow(
-        string DocumentFileName,
-        string Section,
-        int ChunkIndex,
-        string Content,
-        double CosineDistance);
 }

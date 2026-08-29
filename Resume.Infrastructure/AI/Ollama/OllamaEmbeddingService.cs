@@ -1,15 +1,15 @@
 using System.Net.Http.Json;
 using Microsoft.Extensions.Options;
-using Resume.Application.Interfaces;
+using Resume.Application.Interfaces.IService;
 
 namespace Resume.Infrastructure.AI.Ollama;
 
-internal sealed record EmbedRequest(string Model, string Input);
-
-internal sealed record EmbedResponse(float[][] Embeddings);
-
+/// <summary>
+/// Generates embeddings using the Ollama API.
+/// </summary>
 public class OllamaEmbeddingService(HttpClient httpClient, IOptions<OllamaOptions> options) : IEmbeddingService
 {
+    /// <inheritdoc />
     public async Task<float[]> GenerateEmbeddingAsync(string text, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(text))
@@ -17,16 +17,16 @@ public class OllamaEmbeddingService(HttpClient httpClient, IOptions<OllamaOption
             throw new ArgumentException("Text must not be null or whitespace.", nameof(text));
         }
 
-        var ollama = options.Value;
+        OllamaOptions ollama = options.Value;
 
-        using var response = await httpClient.PostAsJsonAsync(
+        using HttpResponseMessage response = await httpClient.PostAsJsonAsync(
             "api/embed",
             new EmbedRequest(ollama.EmbeddingModel, text),
             cancellationToken);
         response.EnsureSuccessStatusCode();
 
-        var payload = await response.Content.ReadFromJsonAsync<EmbedResponse>(cancellationToken);
-        var embedding = payload?.Embeddings is { Length: > 0 } batches ? batches[0] : null;
+        EmbedResponse? payload = await response.Content.ReadFromJsonAsync<EmbedResponse>(cancellationToken);
+        float[]? embedding = payload?.Embeddings is { Length: > 0 } batches ? batches[0] : null;
 
         if (embedding is null || embedding.Length == 0)
         {
@@ -43,4 +43,8 @@ public class OllamaEmbeddingService(HttpClient httpClient, IOptions<OllamaOption
 
         return embedding;
     }
+
+    private sealed record EmbedRequest(string Model, string Input);
+
+    private sealed record EmbedResponse(float[][] Embeddings);
 }

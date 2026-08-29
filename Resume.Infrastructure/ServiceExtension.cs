@@ -4,19 +4,30 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Pgvector.EntityFrameworkCore;
 using Resume.Application;
-using Resume.Application.Interfaces;
+using Resume.Application.Interfaces.IRepository;
+using Resume.Application.Interfaces.IService;
 using Resume.Infrastructure.AI.Ollama;
-using Resume.Infrastructure.Knowledge;
 using Resume.Infrastructure.Persistence;
-using Resume.Infrastructure.Persistence.Repositories;
+using Resume.Infrastructure.Repository;
+using Resume.Infrastructure.Service;
 
 namespace Resume.Infrastructure;
 
-public static class DependencyInjection
+/// <summary>
+/// Provides dependency injection extension methods for the infrastructure layer.
+/// </summary>
+public static class ServiceExtension
 {
+    /// <summary>
+    /// Registers the infrastructure layer services, including the database context,
+    /// repositories, services, and configuration options.
+    /// </summary>
+    /// <param name="services">The service collection to configure.</param>
+    /// <param name="configuration">The application configuration.</param>
+    /// <returns>The configured service collection.</returns>
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = Environment.GetEnvironmentVariable("SUPABASE_CONNECTION_STRING")
+        string? connectionString = Environment.GetEnvironmentVariable("SUPABASE_CONNECTION_STRING")
             ?? configuration.GetConnectionString("Supabase");
 
         if (string.IsNullOrWhiteSpace(connectionString))
@@ -34,8 +45,8 @@ public static class DependencyInjection
         services.AddScoped<IVectorSearchRepository, VectorSearchRepository>();
 
         services.Configure<KnowledgeBaseOptions>(configuration.GetSection(KnowledgeBaseOptions.SectionName));
-        services.AddSingleton<IMarkdownChunker, MarkdownChunker>();
-        services.AddScoped<IMarkdownDocumentLoader, MarkdownDocumentLoader>();
+        services.AddSingleton<IMarkdownChunkerService, MarkdownChunkerService>();
+        services.AddScoped<IMarkdownDocumentLoaderService, MarkdownDocumentLoaderService>();
 
         services.Configure<OllamaOptions>(configuration.GetSection(OllamaOptions.SectionName));
         services.AddHttpClient<IEmbeddingService, OllamaEmbeddingService>((serviceProvider, httpClient) =>
@@ -48,7 +59,7 @@ public static class DependencyInjection
 
     private static void ConfigureOllamaHttpClient(IServiceProvider serviceProvider, HttpClient httpClient)
     {
-        var ollama = serviceProvider.GetRequiredService<IOptions<OllamaOptions>>().Value;
+        OllamaOptions ollama = serviceProvider.GetRequiredService<IOptions<OllamaOptions>>().Value;
         httpClient.BaseAddress = new Uri(ollama.BaseUrl.TrimEnd('/') + "/");
         httpClient.Timeout = TimeSpan.FromMinutes(10);
     }

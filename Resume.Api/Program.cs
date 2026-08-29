@@ -1,7 +1,10 @@
+using System.Text.Json;
+using FluentValidation;
+using Microsoft.AspNetCore.Diagnostics;
 using Resume.Application;
 using Resume.Infrastructure;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 NormalizeKnowledgeBasePath(builder);
 
@@ -10,12 +13,27 @@ builder.Services.AddControllers();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseExceptionHandler(exceptionHandlerApp =>
+    exceptionHandlerApp.Run(async context =>
+    {
+        IExceptionHandlerFeature? exceptionFeature = context.Features.Get<IExceptionHandlerFeature>();
+
+        if (exceptionFeature?.Error is ValidationException validationException)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            context.Response.ContentType = "application/json";
+
+            string error = JsonSerializer.Serialize(new { error = validationException.Message });
+            await context.Response.WriteAsync(error);
+        }
+    }));
 
 app.UseHttpsRedirection();
 
@@ -25,7 +43,7 @@ app.Run();
 
 static void NormalizeKnowledgeBasePath(WebApplicationBuilder builder)
 {
-    var path = builder.Configuration["KnowledgeBase:Path"];
+    string? path = builder.Configuration["KnowledgeBase:Path"];
 
     if (string.IsNullOrWhiteSpace(path) || Path.IsPathRooted(path))
     {
