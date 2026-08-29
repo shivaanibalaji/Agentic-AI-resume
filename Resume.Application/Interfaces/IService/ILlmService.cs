@@ -13,4 +13,17 @@ public interface ILlmService
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The generated answer.</returns>
     Task<string> GenerateAnswerAsync(string systemPrompt, string userPrompt, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Generates an answer using the supplied system and user prompts, yielding each
+    /// content chunk as it becomes available.
+    /// </summary>
+    /// <param name="systemPrompt">The system prompt that guides the model.</param>
+    /// <param name="userPrompt">The user prompt containing the question and context.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The individual chunks of the generated answer.</returns>
+    IAsyncEnumerable<string> GenerateAnswerStreamAsync(
+        string systemPrompt,
+        string userPrompt,
+        CancellationToken cancellationToken = default);
 }

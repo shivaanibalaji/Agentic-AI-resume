@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using FluentValidation;
 using MediatR;
@@ -10,11 +12,11 @@ using Resume.Application.Interfaces.IService;
 namespace Resume.Application.Query.AskPortfolioQuestion;
 
 /// <summary>
-/// Query that asks a question about the portfolio and returns an answer with sources.
+/// Query that asks a question about the portfolio and streams an answer with sources.
 /// </summary>
 /// <param name="Message">The question to ask.</param>
 /// <param name="TopK">The maximum number of context chunks to retrieve.</param>
-public sealed record AskPortfolioQuestionQuery(string Message, int TopK = 5) : IRequest<ChatResponseDto>;
+public sealed record AskPortfolioQuestionQuery(string Message, int TopK = 5) : IRequest<IAsyncEnumerable<ChatStreamChunkDto>>;
 
 /// <summary>
 /// Validates that a portfolio question contains a non-empty message.
@@ -32,7 +34,8 @@ public sealed class AskPortfolioQuestionQueryValidator : AbstractValidator<AskPo
 }
 
 /// <summary>
-/// Handler that answers a portfolio question using retrieval-augmented generation.
+/// Handler that answers a portfolio question using retrieval-augmented generation,
+/// streaming the answer chunks as they become available.
 /// </summary>
 public sealed class AskPortfolioQuestionQueryHandler(
     IEmbeddingService embeddingService,
@@ -40,7 +43,7 @@ public sealed class AskPortfolioQuestionQueryHandler(
     IRetrievalRankingService retrievalRankingService,
     ILlmService llmService,
     IOptions<KnowledgeBaseOptions> options)
-    : IRequestHandler<AskPortfolioQuestionQuery, ChatResponseDto>
+    : IRequestHandler<AskPortfolioQuestionQuery, IAsyncEnumerable<ChatStreamChunkDto>>
 {
     private const int DefaultTopK = 5;
 
@@ -49,16 +52,25 @@ public sealed class AskPortfolioQuestionQueryHandler(
         "Do not invent or assume personal information. If the context does not contain enough information, " +
         "say that the information is not available in the portfolio.";
 
+    private const string NoContextAnswer = "The information is not available in the portfolio.";
+
     private static readonly Regex ThinkingBlockRegex =
         new(" thinking.*? response", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
     /// <summary>
-    /// Answers the supplied question by retrieving relevant context and generating a response.
+    /// Answers the supplied question by retrieving relevant context and streaming the generated response.
     /// </summary>
     /// <param name="request">The portfolio question query.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A chat response containing the answer and its sources.</returns>
-    public async Task<ChatResponseDto> Handle(AskPortfolioQuestionQuery request, CancellationToken cancellationToken)
+    /// <returns>A stream of answer chunks ending with a terminal chunk that carries the sources.</returns>
+    public Task<IAsyncEnumerable<ChatStreamChunkDto>> Handle(AskPortfolioQuestionQuery request, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(StreamAnswerAsync(request, cancellationToken));
+    }
+
+    private async IAsyncEnumerable<ChatStreamChunkDto> StreamAnswerAsync(
+        AskPortfolioQuestionQuery request,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         int topK = request.TopK <= 0 ? DefaultTopK : request.TopK;
         int candidatePoolSize = Math.Max(topK, options.Value.CandidatePoolSize);
@@ -67,13 +79,25 @@ public sealed class AskPortfolioQuestionQueryHandler(
         IReadOnlyList<KnowledgeChunkHitDto> candidates = await vectorSearchRepository.SearchCandidatesAsync(questionEmbedding, candidatePoolSize, cancellationToken);
         IReadOnlyList<SearchResultDto> results = retrievalRankingService.ReRank(candidates, request.Message, topK);
 
+        List<SourceDto> sources = results
+            .Select(result => new SourceDto
+            {
+                Document = result.Document,
+                Section = result.Section,
+                ChunkIndex = result.ChunkIndex
+            })
+            .ToList();
+
         if (results.Count == 0)
         {
-            return new ChatResponseDto
+            yield return new ChatStreamChunkDto
             {
-                Answer = "The information is not available in the portfolio.",
-                Sources = Array.Empty<SourceDto>()
+                AnswerPart = NoContextAnswer,
+                Sources = sources,
+                Done = true
             };
+
+            yield break;
         }
 
         string context = string.Join(
@@ -89,27 +113,25 @@ public sealed class AskPortfolioQuestionQueryHandler(
             Question: {request.Message}
             """;
 
-        string rawAnswer = await llmService.GenerateAnswerAsync(SystemPrompt, userPrompt, cancellationToken);
-        string answer = ThinkingBlockRegex.Replace(rawAnswer, string.Empty).Trim();
+        StringBuilder answerBuilder = new();
+
+        await foreach (string chunk in llmService.GenerateAnswerStreamAsync(SystemPrompt, userPrompt, cancellationToken))
+        {
+            yield return new ChatStreamChunkDto { AnswerPart = chunk };
+            answerBuilder.Append(chunk);
+        }
+
+        string answer = ThinkingBlockRegex.Replace(answerBuilder.ToString(), string.Empty).Trim();
 
         if (answer.Length == 0)
         {
-            answer = "The information is not available in the portfolio.";
+            yield return new ChatStreamChunkDto { AnswerPart = NoContextAnswer };
         }
 
-        List<SourceDto> sources = results
-            .Select(result => new SourceDto
-            {
-                Document = result.Document,
-                Section = result.Section,
-                ChunkIndex = result.ChunkIndex
-            })
-            .ToList();
-
-        return new ChatResponseDto
+        yield return new ChatStreamChunkDto
         {
-            Answer = answer,
-            Sources = sources
+            Sources = sources,
+            Done = true
         };
     }
 }
